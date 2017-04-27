@@ -155,13 +155,19 @@ class Hackathon_AsyncIndex_Model_Observer
         $resourceModel = Mage::getResourceSingleton('index/process');
 
         $resourceModel->beginTransaction();
+        $scheduleMode = 'schedule';
+
+        //Fallback for 1.6.2 installations > Undefined class constant 'MODE_SCHEDULE'
+        if ( true === defined('Mage_Index_Model_Process::MODE_SCHEDULE') ) {
+            $scheduleMode = Mage_Index_Model_Process::MODE_SCHEDULE;
+        }
 
         try
         {
             $pCollection = Mage::getSingleton('index/indexer')->getProcessesCollection();
             /** @var Mage_Index_Model_Process $process */
             foreach ($pCollection as $process) {
-                $process->setMode(Mage_Index_Model_Process::MODE_SCHEDULE);
+                $process->setMode($scheduleMode);
                 $eventLimit            = (int)Mage::getStoreConfig('system/asyncindex/event_limit');
                 $unprocessedColl = $process->getUnprocessedEventsCollection()->setPageSize($eventLimit);
 
