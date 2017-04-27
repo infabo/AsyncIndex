@@ -20,6 +20,11 @@
             <hackathon_asyncindex>
                 <class>Hackathon_AsyncIndex_Model</class>
             </hackathon_asyncindex>
+            <index_resource>
+                <rewrite>
+                    <process_collection>Hackathon_AsyncIndex_Model_Resource_Index_Process_Collection</process_collection>
+                </rewrite>
+            </index_resource>
         </models>
         <events>
         </events>
